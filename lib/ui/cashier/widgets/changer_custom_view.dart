@@ -108,31 +108,34 @@ class ChangerCustomViewState extends State<ChangerCustomView> {
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: kHorizontalSpacing),
-      child: Form(
-        key: formKey,
-        child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-          actions,
-          if (errorMessage.isNotEmpty)
-            Center(
-              child: Text(
-                errorMessage,
-                style: theme.textTheme.bodyMedium!.copyWith(color: theme.colorScheme.error),
+      child: Material(
+        type: MaterialType.transparency,
+        child: Form(
+          key: formKey,
+          child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+            actions,
+            if (errorMessage.isNotEmpty)
+              Center(
+                child: Text(
+                  errorMessage,
+                  style: theme.textTheme.bodyMedium!.copyWith(color: theme.colorScheme.error),
+                ),
               ),
-            ),
-          TextDivider(label: S.cashierChangerCustomDividerFrom),
-          sourceEntry,
-          TextDivider(label: S.cashierChangerCustomDividerTo),
-          ...targetEntries,
-          // add bottom
-          const SizedBox(height: kInternalSpacing),
-          OutlinedButton.icon(
-            onPressed: () => setState(() {
-              targets.add(CashierChangeEntryObject());
-            }),
-            icon: const Icon(KIcons.add),
-            label: Text(S.cashierChangerCustomUnitAddBtn),
-          )
-        ]),
+            TextDivider(label: S.cashierChangerCustomDividerFrom),
+            sourceEntry,
+            TextDivider(label: S.cashierChangerCustomDividerTo),
+            ...targetEntries,
+            // add bottom
+            const SizedBox(height: kInternalSpacing),
+            OutlinedButton.icon(
+              onPressed: () => setState(() {
+                targets.add(CashierChangeEntryObject());
+              }),
+              icon: const Icon(KIcons.add),
+              label: Text(S.cashierChangerCustomUnitAddBtn),
+            )
+          ]),
+        ),
       ),
     );
   }
