@@ -35,27 +35,25 @@ class _ChartModalState extends State<ChartModal> with ItemModal<ChartModal> {
   @override
   List<Widget> buildFormFields() {
     return [
-      p(Material(
-        type: MaterialType.transparency,
-        child: TextFormField(
-          key: const Key('chart.title'),
-          controller: _nameController,
-          focusNode: _nameFocusNode,
-          textInputAction: TextInputAction.next,
-          textCapitalization: TextCapitalization.words,
-          decoration: InputDecoration(
-            labelText: S.analysisChartModalNameLabel,
-            hintText: widget.chart?.name,
-            filled: false,
-          ),
-          maxLength: 50,
-          validator: Validator.textLimit(
-            S.analysisChartModalNameLabel,
-            50,
-            focusNode: _nameFocusNode,
-          ),
+      p(TextFormField(
+        key: const Key('chart.title'),
+        controller: _nameController,
+        focusNode: _nameFocusNode,
+        textInputAction: TextInputAction.next,
+        textCapitalization: TextCapitalization.words,
+        decoration: InputDecoration(
+          labelText: S.analysisChartModalNameLabel,
+          hintText: S.analysisChartModalNameHint,
+          filled: false,
         ),
-       )),
+        onFieldSubmitted: handleFieldSubmit,
+        maxLength: 30,
+        validator: Validator.textLimit(
+          S.analysisChartModalNameLabel,
+          30,
+          focusNode: _nameFocusNode,
+        ),
+      )),
       CheckboxListTile(
         key: const Key('chart.ignoreEmpty'),
         controlAffinity: ListTileControlAffinity.leading,

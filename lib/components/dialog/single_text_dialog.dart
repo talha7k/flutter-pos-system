@@ -42,33 +42,33 @@ class _SingleTextDialogState extends State<SingleTextDialog> {
   @override
   Widget build(BuildContext context) {
     final local = MaterialLocalizations.of(context);
-    final textField = Material(
-      type: MaterialType.transparency,
-      child: TextFormField(
-        key: const Key('text_dialog.text'),
-        controller: textController,
-        autofocus: widget.autofocus,
-        autofillHints: widget.hints,
-        onSaved: onSubmit,
-        onFieldSubmitted: onSubmit,
-        keyboardType: widget.keyboardType,
-        validator: widget.validator,
-        decoration: widget.decoration,
-        maxLength: widget.maxLength,
-        textInputAction: TextInputAction.done,
-      ),
+    final textField = TextFormField(
+      key: const Key('text_dialog.text'),
+      controller: textController,
+      autofocus: widget.autofocus,
+      autofillHints: widget.hints,
+      onSaved: onSubmit,
+      onFieldSubmitted: onSubmit,
+      keyboardType: widget.keyboardType,
+      validator: widget.validator,
+      decoration: widget.decoration,
+      maxLength: widget.maxLength,
+      textInputAction: TextInputAction.done,
     );
 
     return AlertDialog.adaptive(
       title: widget.title,
       scrollable: true,
-      content: Column(children: [
-        if (widget.header != null) widget.header!,
-        Form(
-          key: form,
-          child: textField,
-        )
-      ]),
+      content: Material(
+        type: MaterialType.transparency,
+        child: Column(children: [
+          if (widget.header != null) widget.header!,
+          Form(
+            key: form,
+            child: textField,
+          )
+        ]),
+      ),
       actions: [
         PopButton(
           key: const Key('text_dialog.cancel'),

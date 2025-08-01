@@ -21,13 +21,16 @@ mixin ItemModal<T extends StatefulWidget> on State<T> {
       ),
       scaffoldMessengerKey: scaffoldMessengerKey,
       floatingActionButton: buildFloatingActionButton(),
-      content: Form(
-        key: formKey,
-        child: Column(
-          children: [
-            ...buildFormFields(),
-            const SizedBox(height: kDialogBottomSpacing),
-          ],
+      content: Material(
+        type: MaterialType.transparency,
+        child: Form(
+          key: formKey,
+          child: Column(
+            children: [
+              ...buildFormFields(),
+              const SizedBox(height: kDialogBottomSpacing),
+            ],
+          ),
         ),
       ),
     );

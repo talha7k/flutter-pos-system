@@ -193,24 +193,27 @@ class _SpreadsheetDialogState extends State<SpreadsheetDialog> {
   }
 
   Widget _buildTextField() {
-    return Form(
-      key: form,
-      child: TextFormField(
-        key: const Key('transit.spreadsheet_editor'),
-        autocorrect: false,
-        controller: textController,
-        keyboardType: TextInputType.text,
-        textInputAction: TextInputAction.done,
-        validator: _validate,
-        onSaved: _submit,
-        decoration: InputDecoration(
-          labelText: S.transitGoogleSheetDialogIdLabel,
-          helperText: S.transitGoogleSheetDialogIdHelper,
-          floatingLabelBehavior: FloatingLabelBehavior.always,
-          errorMaxLines: 5,
-          suffixIcon: IconButton(
-            icon: Icon(showTutorial ? Icons.help : Icons.help_outline),
-            onPressed: () => setState(() => showTutorial = !showTutorial),
+    return Material(
+      type: MaterialType.transparency,
+      child: Form(
+        key: form,
+        child: TextFormField(
+          key: const Key('transit.spreadsheet_editor'),
+          autocorrect: false,
+          controller: textController,
+          keyboardType: TextInputType.text,
+          textInputAction: TextInputAction.done,
+          validator: _validate,
+          onSaved: _submit,
+          decoration: InputDecoration(
+            labelText: S.transitGoogleSheetDialogIdLabel,
+            helperText: S.transitGoogleSheetDialogIdHelper,
+            floatingLabelBehavior: FloatingLabelBehavior.always,
+            errorMaxLines: 5,
+            suffixIcon: IconButton(
+              icon: Icon(showTutorial ? Icons.help : Icons.help_outline),
+              onPressed: () => setState(() => showTutorial = !showTutorial),
+            ),
           ),
         ),
       ),

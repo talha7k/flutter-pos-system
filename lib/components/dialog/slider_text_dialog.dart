@@ -49,7 +49,10 @@ class _SliderTextDialogState extends State<SliderTextDialog> {
     return AlertDialog.adaptive(
       title: widget.title,
       scrollable: true,
-      content: Form(key: form, child: child),
+      content: Material(
+        type: MaterialType.transparency,
+        child: Form(key: form, child: child),
+      ),
       actions: [
         PopButton(
           key: const Key('slider_dialog.cancel'),
