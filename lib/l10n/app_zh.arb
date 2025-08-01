@@ -1602,6 +1602,7 @@
   "orderCartActionChangeCountSuffix": "個",
   "orderCartActionFree": "招待",
   "orderCartActionDelete": "刪除",
+  "orderCartActionPrint": "列印",
   "orderCartSnapshotEmpty": "尚未點餐",
   "orderCartMetaTotalPrice": "總價：{price}",
   "@orderCartMetaTotalPrice": {

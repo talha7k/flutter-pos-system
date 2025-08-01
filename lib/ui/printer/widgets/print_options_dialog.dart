@@ -122,8 +122,11 @@ class PrintOptionsDialog extends StatelessWidget {
       showDialog(
         context: context,
         barrierDismissible: false,
-        builder: (context) => const Center(
-          child: CircularProgressIndicator.adaptive(),
+        builder: (context) => const Material(
+          color: Colors.transparent,
+          child: Center(
+            child: CircularProgressIndicator.adaptive(),
+          ),
         ),
       );
       

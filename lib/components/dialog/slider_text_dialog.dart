@@ -74,16 +74,19 @@ class _SliderTextDialogState extends State<SliderTextDialog> {
     return ListenableBuilder(
       listenable: sliderValue,
       builder: (_, __) => Column(children: [
-        TextFormField(
-          key: const Key('slider_dialog.text'),
-          controller: textController,
-          onSaved: onSubmit,
-          onFieldSubmitted: onSubmit,
-          autofocus: !withSlider,
-          keyboardType: TextInputType.number,
-          validator: widget.validator,
-          decoration: widget.decoration,
-          textInputAction: TextInputAction.done,
+        Material(
+          type: MaterialType.transparency,
+          child: TextFormField(
+            key: const Key('slider_dialog.text'),
+            controller: textController,
+            onSaved: onSubmit,
+            onFieldSubmitted: onSubmit,
+            autofocus: !withSlider,
+            keyboardType: TextInputType.number,
+            validator: widget.validator,
+            decoration: widget.decoration,
+            textInputAction: TextInputAction.done,
+          ),
         ),
         if (withSlider)
           Slider.adaptive(

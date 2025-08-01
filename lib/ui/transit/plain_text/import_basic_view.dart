@@ -43,18 +43,21 @@ class _ImportBasicHeaderState extends State<ImportBasicHeader> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          content: TextField(
-            key: const Key('transit.pt_text'),
-            controller: controller,
-            keyboardType: TextInputType.multiline,
-            minLines: 3,
-            maxLines: 5,
-            decoration: InputDecoration(
-              border: const OutlineInputBorder(
-                borderSide: BorderSide(width: 5.0),
+          content: Material(
+            type: MaterialType.transparency,
+            child: TextField(
+              key: const Key('transit.pt_text'),
+              controller: controller,
+              keyboardType: TextInputType.multiline,
+              minLines: 3,
+              maxLines: 5,
+              decoration: InputDecoration(
+                border: const OutlineInputBorder(
+                  borderSide: BorderSide(width: 5.0),
+                ),
+                hintText: S.transitImportBtnPlainTextHint,
+                helperMaxLines: 2,
               ),
-              hintText: S.transitImportBtnPlainTextHint,
-              helperMaxLines: 2,
             ),
           ),
           actions: [

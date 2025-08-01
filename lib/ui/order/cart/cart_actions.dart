@@ -5,6 +5,7 @@ import 'package:possystem/constants/icons.dart';
 import 'package:possystem/helpers/validator.dart';
 import 'package:possystem/models/repository/cart.dart';
 import 'package:possystem/translator.dart';
+import 'package:possystem/ui/printer/widgets/print_options_dialog.dart';
 
 class CartActions extends StatelessWidget {
   const CartActions({super.key});
@@ -77,6 +78,10 @@ class CartActions extends StatelessWidget {
         return Cart.instance.selectedRemove();
       case CartActionTypes.free:
         return Cart.instance.selectedUpdatePrice(0);
+      case CartActionTypes.print:
+        if (Cart.instance.isEmpty) return;
+        final order = Cart.instance.toObject();
+        return await PrintOptionsDialog.show(context, order);
     }
 
     final result = await showDialog<String>(
@@ -125,6 +130,12 @@ class CartActions extends StatelessWidget {
           title: Text(S.orderCartActionDelete),
           returnValue: CartActionTypes.delete,
         ),
+        BottomSheetAction(
+          key: const Key('cart.action.print'),
+          leading: const Icon(Icons.print_outlined),
+          title: Text(S.orderCartActionPrint),
+          returnValue: CartActionTypes.print,
+        ),
       ],
     );
 
@@ -142,6 +153,7 @@ enum CartActionTypes {
   count,
   free,
   delete,
+  print,
 }
 
 class _DialogItem {
