@@ -55,8 +55,6 @@ app.*.map.json
 services.*.tar
 
 # Environment-specific configurations
-.env
-.env.local
 .env.*.local
 *.key
 *.pem
@@ -73,3 +71,5 @@ android/build/*
 
 # mocks
 # *.mocks.dart
+config.bat
+node_modules

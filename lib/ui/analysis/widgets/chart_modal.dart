@@ -32,6 +32,8 @@ class _ChartModalState extends State<ChartModal> with ItemModal<ChartModal> {
   @override
   String get title => widget.chart == null ? S.analysisChartTitleCreate : S.analysisChartTitleUpdate;
 
+
+
   @override
   List<Widget> buildFormFields() {
     return [
