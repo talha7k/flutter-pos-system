@@ -92,3 +92,27 @@ info:
   address: 位置
   signal: 訊號強度
   status: 狀態
+options:
+  title: 列印選項
+  description: 選擇您想要的列印方式
+  bluetooth: 藍牙出單機
+  bluetoothAvailable: 準備列印
+  bluetoothUnavailable: 沒有連接的出單機
+  pdf: PDF 收據
+  pdfDescription: 生成帶有 QR 碼的 PDF
+  success:
+    bluetoothPrint: 收據已成功發送到出單機
+    pdfGenerated: PDF 收據生成成功
+    pdfSaved: 'PDF 已保存到：{path}'
+  error:
+    bluetoothPrint: 列印收據失敗
+    pdfGeneration: 生成 PDF 失敗
+    pdfSave: 保存 PDF 失敗
+pdf:
+  title: PDF 選項
+  preview: 預覽 PDF
+  previewDescription: 列印或分享前先預覽
+  share: 分享/列印 PDF
+  shareDescription: 分享或發送到出單機
+  save: 保存到設備
+  saveDescription: 將 PDF 保存到設備存儲

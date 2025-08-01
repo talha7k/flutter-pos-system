@@ -11,6 +11,7 @@ import 'package:possystem/models/printer.dart';
 import 'package:possystem/models/repository/menu.dart';
 import 'package:possystem/models/repository/order_attributes.dart';
 import 'package:possystem/models/repository/stashed_orders.dart';
+import 'package:possystem/ui/printer/widgets/print_options_dialog.dart';
 
 import 'cashier.dart';
 import 'seller.dart';
@@ -131,10 +132,8 @@ class Cart extends ChangeNotifier {
     Log.ger('begin_order_checkout', {'name': name, 'paid': paid, 'price': price});
     final data = toObject(paid: paid);
 
-    final receipt = await Printers.instance.generateReceipts(context: context, order: data);
-    if (receipt != null) {
-      Printers.instance.printReceipts(receipt);
-    }
+    // Show print options dialog instead of directly printing
+    await _showPrintOptionsDialog(context, data);
 
     await Seller.instance.push(data);
     await Stock.instance.order(data);
@@ -310,6 +309,11 @@ class Cart extends ChangeNotifier {
         ..clear()
         ..addAll(attributes);
     }
+  }
+
+  /// Show print options dialog for the order
+  Future<void> _showPrintOptionsDialog(BuildContext context, OrderObject order) async {
+    await PrintOptionsDialog.show(context, order);
   }
 
   /// Cart status to [OrderObject]

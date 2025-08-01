@@ -101,3 +101,27 @@ info:
   address: Location
   signal: Signal
   status: Status
+options:
+  title: Print Options
+  description: Choose how you want to print your receipt
+  bluetooth: Bluetooth Printer
+  bluetoothAvailable: Ready to print
+  bluetoothUnavailable: No printers connected
+  pdf: PDF Receipt
+  pdfDescription: Generate PDF with QR code
+  success:
+    bluetoothPrint: Receipt sent to printer successfully
+    pdfGenerated: PDF receipt generated successfully
+    pdfSaved: 'PDF saved to: {path}'
+  error:
+    bluetoothPrint: Failed to print receipt
+    pdfGeneration: Failed to generate PDF
+    pdfSave: Failed to save PDF
+pdf:
+  title: PDF Options
+  preview: Preview PDF
+  previewDescription: View before printing or sharing
+  share: Share/Print PDF
+  shareDescription: Share or send to printer
+  save: Save to Device
+  saveDescription: Save PDF to device storage
