@@ -41,49 +41,48 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyBaJ4_k0mBT9OGmlsIuVUoF_vrzvj9xFdM',
-    appId: '1:2654101329:web:aed49d1fb09f6e483d3d70',
-    messagingSenderId: '2654101329',
-    projectId: 'dijipos-efce6',
-    authDomain: 'dijipos-efce6.firebaseapp.com',
-    storageBucket: 'dijipos-efce6.firebasestorage.app',
-    measurementId: 'G-0Q6VFX38J5',
+    apiKey: 'YOUR_WEB_API_KEY_HERE',
+    appId: 'YOUR_WEB_APP_ID_HERE',
+    messagingSenderId: 'YOUR_MESSAGING_SENDER_ID_HERE',
+    projectId: 'YOUR_PROJECT_ID_HERE',
+    authDomain: 'YOUR_AUTH_DOMAIN_HERE',
+    storageBucket: 'YOUR_STORAGE_BUCKET_HERE',
+    measurementId: 'YOUR_MEASUREMENT_ID_HERE',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyAE8dHYYJbb_bmPA6vrseaXOOPtvpptCjM',
-    appId: '1:2654101329:android:fe92f14439f0b18b3d3d70',
-    messagingSenderId: '2654101329',
-    projectId: 'dijipos-efce6',
-    storageBucket: 'dijipos-efce6.firebasestorage.app',
+    apiKey: 'YOUR_ANDROID_API_KEY_HERE',
+    appId: 'YOUR_ANDROID_APP_ID_HERE',
+    messagingSenderId: 'YOUR_MESSAGING_SENDER_ID_HERE',
+    projectId: 'YOUR_PROJECT_ID_HERE',
+    storageBucket: 'YOUR_STORAGE_BUCKET_HERE',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyBfqP1sjN_nZZX438C3d9YPZ8xz9JMVCDE',
-    appId: '1:2654101329:ios:414b0fe9af13392e3d3d70',
-    messagingSenderId: '2654101329',
-    projectId: 'dijipos-efce6',
-    storageBucket: 'dijipos-efce6.firebasestorage.app',
-    iosBundleId: 'com.example.possystem',
+    apiKey: 'YOUR_IOS_API_KEY_HERE',
+    appId: 'YOUR_IOS_APP_ID_HERE',
+    messagingSenderId: 'YOUR_MESSAGING_SENDER_ID_HERE',
+    projectId: 'YOUR_PROJECT_ID_HERE',
+    storageBucket: 'YOUR_STORAGE_BUCKET_HERE',
+    iosBundleId: 'YOUR_IOS_BUNDLE_ID_HERE',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyBfqP1sjN_nZZX438C3d9YPZ8xz9JMVCDE',
-    appId: '1:2654101329:ios:414b0fe9af13392e3d3d70',
-    messagingSenderId: '2654101329',
-    projectId: 'dijipos-efce6',
-    storageBucket: 'dijipos-efce6.firebasestorage.app',
-    iosBundleId: 'com.example.possystem',
+    apiKey: 'YOUR_MACOS_API_KEY_HERE',
+    appId: 'YOUR_MACOS_APP_ID_HERE',
+    messagingSenderId: 'YOUR_MESSAGING_SENDER_ID_HERE',
+    projectId: 'YOUR_PROJECT_ID_HERE',
+    storageBucket: 'YOUR_STORAGE_BUCKET_HERE',
+    iosBundleId: 'YOUR_MACOS_BUNDLE_ID_HERE',
   );
 
   static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'AIzaSyBaJ4_k0mBT9OGmlsIuVUoF_vrzvj9xFdM',
-    appId: '1:2654101329:web:aed49d1fb09f6e483d3d70',
-    messagingSenderId: '2654101329',
-    projectId: 'dijipos-efce6',
-    authDomain: 'dijipos-efce6.firebaseapp.com',
-    storageBucket: 'dijipos-efce6.firebasestorage.app',
-    measurementId: 'G-0Q6VFX38J5',
+    apiKey: 'YOUR_WINDOWS_API_KEY_HERE',
+    appId: 'YOUR_WINDOWS_APP_ID_HERE',
+    messagingSenderId: 'YOUR_MESSAGING_SENDER_ID_HERE',
+    projectId: 'YOUR_PROJECT_ID_HERE',
+    authDomain: 'YOUR_AUTH_DOMAIN_HERE',
+    storageBucket: 'YOUR_STORAGE_BUCKET_HERE',
+    measurementId: 'YOUR_MEASUREMENT_ID_HERE',
   );
-
 }

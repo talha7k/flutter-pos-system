@@ -3,17 +3,17 @@
 <plist version="1.0">
 <dict>
 	<key>API_KEY</key>
-	<string>AIzaSyBfqP1sjN_nZZX438C3d9YPZ8xz9JMVCDE</string>
+	<string>YOUR_IOS_API_KEY_HERE</string>
 	<key>GCM_SENDER_ID</key>
-	<string>2654101329</string>
+	<string>YOUR_MESSAGING_SENDER_ID_HERE</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.example.possystem</string>
+	<string>YOUR_IOS_BUNDLE_ID_HERE</string>
 	<key>PROJECT_ID</key>
-	<string>dijipos-efce6</string>
+	<string>YOUR_PROJECT_ID_HERE</string>
 	<key>STORAGE_BUCKET</key>
-	<string>dijipos-efce6.firebasestorage.app</string>
+	<string>YOUR_STORAGE_BUCKET_HERE</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -25,6 +25,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:2654101329:ios:414b0fe9af13392e3d3d70</string>
+	<string>YOUR_IOS_APP_ID_HERE</string>
 </dict>
 </plist>

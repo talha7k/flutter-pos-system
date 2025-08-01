@@ -49,6 +49,10 @@ app.*.map.json
 # Sensitive data
 google-services.json
 services.*.tar
+firebase_options.dart
+GoogleService-Info.plist
+firebase_options.prod.dart
+firebase_options.dev.dart
 
 # mocks
 # *.mocks.dart
