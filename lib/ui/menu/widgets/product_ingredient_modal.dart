@@ -42,38 +42,45 @@ class _ProductIngredientModalState extends State<ProductIngredientModal> with It
   @override
   List<Widget> buildFormFields() {
     return [
-      // avoid search-bar's label overflow
-      const SizedBox(height: 12.0),
-      p(SearchBarWrapper(
-        key: const Key('product_ingredient.search'),
-        text: ingredientName,
-        labelText: S.menuIngredientSearchLabel,
-        hintText: widget.ingredient?.name ?? S.menuIngredientSearchHint,
-        validator: Validator.textLimit(S.menuIngredientSearchLabel, 30),
-        formValidator: _validateIngredient,
-        initData: Stock.instance.itemList,
-        search: (text) async => Stock.instance.sortBySimilarity(text),
-        itemBuilder: _searchItemBuilder,
-        emptyBuilder: _searchEmptyBuilder,
-      )),
-      p(TextFormField(
-        key: const Key('product_ingredient.amount'),
-        controller: _amountController,
-        textInputAction: TextInputAction.done,
-        onFieldSubmitted: handleFieldSubmit,
-        keyboardType: TextInputType.number,
-        focusNode: _amountFocusNode,
-        decoration: InputDecoration(
-          labelText: S.menuIngredientAmountLabel,
-          helperText: S.menuIngredientAmountHelper,
-          helperMaxLines: 10,
-          filled: false,
+      Material(
+        type: MaterialType.transparency,
+        child: Column(
+          children: [
+            // avoid search-bar's label overflow
+            const SizedBox(height: 12.0),
+            p(SearchBarWrapper(
+              key: const Key('product_ingredient.search'),
+              text: ingredientName,
+              labelText: S.menuIngredientSearchLabel,
+              hintText: widget.ingredient?.name ?? S.menuIngredientSearchHint,
+              validator: Validator.textLimit(S.menuIngredientSearchLabel, 30),
+              formValidator: _validateIngredient,
+              initData: Stock.instance.itemList,
+              search: (text) async => Stock.instance.sortBySimilarity(text),
+              itemBuilder: _searchItemBuilder,
+              emptyBuilder: _searchEmptyBuilder,
+            )),
+            p(TextFormField(
+              key: const Key('product_ingredient.amount'),
+              controller: _amountController,
+              textInputAction: TextInputAction.done,
+              onFieldSubmitted: handleFieldSubmit,
+              keyboardType: TextInputType.number,
+              focusNode: _amountFocusNode,
+              decoration: InputDecoration(
+                labelText: S.menuIngredientAmountLabel,
+                helperText: S.menuIngredientAmountHelper,
+                helperMaxLines: 10,
+                filled: false,
+              ),
+              validator: Validator.positiveNumber(
+                S.menuIngredientAmountLabel,
+                focusNode: _amountFocusNode,
+              ),
+            )),
+          ],
         ),
-        validator: Validator.positiveNumber(
-          S.menuIngredientAmountLabel,
-          focusNode: _amountFocusNode,
-        ),
-      )),
+      ),
     ];
   }
 

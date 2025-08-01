@@ -30,50 +30,57 @@ class _StockQuantityModalState extends State<StockQuantityModal> with ItemModal<
   @override
   List<Widget> buildFormFields() {
     return [
-      p(TextFormField(
-        key: const Key('quantity.name'),
-        controller: _nameController,
-        textCapitalization: TextCapitalization.words,
-        textInputAction: TextInputAction.next,
-        decoration: InputDecoration(
-          labelText: S.stockQuantityNameLabel,
-          hintText: widget.quantity?.name ?? S.stockQuantityNameHint,
-          filled: false,
+      Material(
+        type: MaterialType.transparency,
+        child: Column(
+          children: [
+            p(TextFormField(
+              key: const Key('quantity.name'),
+              controller: _nameController,
+              textCapitalization: TextCapitalization.words,
+              textInputAction: TextInputAction.next,
+              decoration: InputDecoration(
+                labelText: S.stockQuantityNameLabel,
+                hintText: widget.quantity?.name ?? S.stockQuantityNameHint,
+                filled: false,
+              ),
+              maxLength: 30,
+              focusNode: _nameFocusNode,
+              validator: Validator.textLimit(
+                S.stockQuantityNameLabel,
+                30,
+                focusNode: _nameFocusNode,
+                validator: (name) {
+                  return widget.quantity?.name != name && Quantities.instance.hasName(name)
+                      ? S.stockQuantityNameErrorRepeat
+                      : null;
+                },
+              ),
+            )),
+            p(TextFormField(
+              key: const Key('quantity.proportion'),
+              controller: _proportionController,
+              keyboardType: TextInputType.number,
+              textInputAction: TextInputAction.done,
+              focusNode: _proportionFocusNode,
+              onFieldSubmitted: handleFieldSubmit,
+              decoration: InputDecoration(
+                labelText: S.stockQuantityProportionLabel,
+                helperText: S.stockQuantityProportionHelper,
+                helperMaxLines: 100,
+                filled: false,
+              ),
+              // NOTE: do we need maximum?
+              validator: Validator.positiveNumber(
+                S.stockQuantityProportionLabel,
+                maximum: 100,
+                allowNull: true,
+                focusNode: _proportionFocusNode,
+              ),
+            )),
+          ],
         ),
-        maxLength: 30,
-        focusNode: _nameFocusNode,
-        validator: Validator.textLimit(
-          S.stockQuantityNameLabel,
-          30,
-          focusNode: _nameFocusNode,
-          validator: (name) {
-            return widget.quantity?.name != name && Quantities.instance.hasName(name)
-                ? S.stockQuantityNameErrorRepeat
-                : null;
-          },
-        ),
-      )),
-      p(TextFormField(
-        key: const Key('quantity.proportion'),
-        controller: _proportionController,
-        keyboardType: TextInputType.number,
-        textInputAction: TextInputAction.done,
-        focusNode: _proportionFocusNode,
-        onFieldSubmitted: handleFieldSubmit,
-        decoration: InputDecoration(
-          labelText: S.stockQuantityProportionLabel,
-          helperText: S.stockQuantityProportionHelper,
-          helperMaxLines: 100,
-          filled: false,
-        ),
-        // NOTE: do we need maximum?
-        validator: Validator.positiveNumber(
-          S.stockQuantityProportionLabel,
-          maximum: 100,
-          allowNull: true,
-          focusNode: _proportionFocusNode,
-        ),
-      )),
+      ),
     ];
   }
 
