@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:packages/bluetooth.dart' as bt;
+import 'package:possystem/adapters/bluetooth_adapter.dart' as bt;
 
 typedef BluetoothSignal = bt.BluetoothSignal;
 typedef PrinterStatus = bt.PrinterStatus;
@@ -13,12 +13,10 @@ typedef BluetoothOffException = bt.BluetoothOffException;
 class Bluetooth {
   static Bluetooth instance = Bluetooth();
 
-  final bt.Bluetooth blue;
-
-  Bluetooth({bt.Bluetooth? blue}) : blue = blue ?? bt.Bluetooth.i;
+  Bluetooth();
 
   /// Timeout in 3 minutes
-  Stream<List<bt.BluetoothDevice>> startScan() => blue.startScan();
+  Stream<List<bt.BluetoothDevice>> startScan() => bt.Bluetooth.scanResults;
 
-  Future<void> stopScan() => blue.stopScan();
+  Future<void> stopScan() => bt.Bluetooth.stopScan();
 }

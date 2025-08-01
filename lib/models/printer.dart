@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:packages/bluetooth.dart' as bt;
+import 'package:possystem/adapters/bluetooth_adapter.dart' as bt;
 import 'package:possystem/app.dart';
 import 'package:possystem/components/imageable_container.dart';
 import 'package:possystem/components/style/snackbar.dart';
