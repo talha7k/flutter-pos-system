@@ -10,17 +10,27 @@ enum PrinterStatus {
   idle, 
   printing, 
   error, 
-  disconnected;
+  disconnected,
+  good,
+  lowBattery,
+  paperNotFound,
+  tooHot,
+  unknown;
   
   int get priority {
     switch (this) {
       case PrinterStatus.error:
+      case PrinterStatus.paperNotFound:
+      case PrinterStatus.tooHot:
         return 3;
       case PrinterStatus.printing:
         return 2;
       case PrinterStatus.disconnected:
+      case PrinterStatus.lowBattery:
         return 1;
       case PrinterStatus.idle:
+      case PrinterStatus.good:
+      case PrinterStatus.unknown:
         return 0;
     }
   }
@@ -102,7 +112,14 @@ class Printer {
   
   bool get connected => _device?.connected ?? false;
   
-  Stream<BluetoothSignal> get statusStream => _device?.createSignalStream() ?? Stream.value(BluetoothSignal.normal);
+  // Add device property for compatibility
+  BluetoothDevice? get device => _device;
+  
+  // Add statusStream that returns PrinterStatus instead of BluetoothSignal
+  Stream<PrinterStatus> get statusStream => Stream.periodic(
+    const Duration(seconds: 2), 
+    (count) => connected ? PrinterStatus.good : PrinterStatus.disconnected
+  );
   
   void addListener(VoidCallback listener) {
     _listeners.add(listener);

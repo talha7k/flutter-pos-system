@@ -34,8 +34,8 @@ void main() {
 
       final excel = Excel.createExcel();
       final sheet = excel[FormattableModel.quantities.l10nName];
-      sheet.appendRow([TextCellValue('name'), TextCellValue('defaultProportion')]);
-      sheet.appendRow([TextCellValue('q1'), const IntCellValue(1)]);
+      sheet.appendRow(['name', 'defaultProportion']);
+      sheet.appendRow(['q1', 1]);
       mockFilePick(picker, bytes: excel.encode());
 
       Quantities.instance.replaceItems({'q1': Quantity(id: 'q1', name: 'q1')});

@@ -36,11 +36,7 @@ class ExcelExporter extends DataExporter {
 
       for (final (rowIdx, row) in rows.indexed) {
         for (final (columnIdx, cell) in row.indexed) {
-          final value = cell.string != null
-              ? TextCellValue(cell.string!)
-              : cell.number != null
-                  ? DoubleCellValue(cell.number!.toDouble())
-                  : null;
+          final value = cell.string ?? cell.number?.toString();
           if (value != null) {
             sheet.updateCell(CellIndex.indexByColumnRow(columnIndex: columnIdx, rowIndex: rowIdx), value);
           }
