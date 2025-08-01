@@ -14,7 +14,7 @@ import 'package:possystem/models/repository/cart.dart';
 import 'package:provider/provider.dart';
 
 import 'app.dart';
-import 'firebase_compatible_options.dart';
+import 'firebase_options.dart';
 import 'helpers/logger.dart';
 import 'models/repository/cashier.dart';
 import 'models/repository/menu.dart';
@@ -52,7 +52,10 @@ void main() async {
       if (kDebugMode) {
         await FirebaseAnalytics.instance.setAnalyticsCollectionEnabled(false);
         await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(false);
-        await FirebaseInAppMessaging.instance.setMessagesSuppressed(true);
+        // Firebase In-App Messaging is only supported on Android and iOS
+        if (defaultTargetPlatform == TargetPlatform.android || defaultTargetPlatform == TargetPlatform.iOS) {
+          await FirebaseInAppMessaging.instance.setMessagesSuppressed(true);
+        }
       }
 
       await Database.instance.initialize(logWhenQuery: isLocalTest);
