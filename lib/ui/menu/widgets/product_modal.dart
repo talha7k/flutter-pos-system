@@ -40,66 +40,73 @@ class _ProductModalState extends State<ProductModal> with ItemModal<ProductModal
   @override
   List<Widget> buildFormFields() {
     return [
-      EditImageHolder(
-        path: _image,
-        onSelected: (image) => setState(() => _image = image),
+      Material(
+        type: MaterialType.transparency,
+        child: Column(
+          children: [
+            EditImageHolder(
+              path: _image,
+              onSelected: (image) => setState(() => _image = image),
+            ),
+            p(TextFormField(
+              key: const Key('product.name'),
+              controller: _nameController,
+              textInputAction: TextInputAction.next,
+              textCapitalization: TextCapitalization.words,
+              focusNode: _nameFocusNode,
+              decoration: InputDecoration(
+                labelText: S.menuProductNameLabel,
+                hintText: widget.product?.name ?? S.menuProductNameHint,
+                filled: false,
+              ),
+              maxLength: 30,
+              validator: Validator.textLimit(
+                S.menuProductNameLabel,
+                30,
+                focusNode: _nameFocusNode,
+                validator: (name) {
+                  return widget.product?.name != name && Menu.instance.hasProductByName(name)
+                      ? S.menuProductNameErrorRepeat
+                      : null;
+                },
+              ),
+            )),
+            p(TextFormField(
+              key: const Key('product.price'),
+              controller: _priceController,
+              textInputAction: TextInputAction.next,
+              keyboardType: TextInputType.number,
+              focusNode: _priceFocusNode,
+              decoration: InputDecoration(
+                labelText: S.menuProductPriceLabel,
+                helperText: S.menuProductPriceHelper,
+                filled: false,
+              ),
+              validator: Validator.isNumber(
+                S.menuProductPriceLabel,
+                focusNode: _priceFocusNode,
+              ),
+            )),
+            p(TextFormField(
+              key: const Key('product.cost'),
+              controller: _costController,
+              textInputAction: TextInputAction.done,
+              keyboardType: TextInputType.number,
+              focusNode: _costFocusNode,
+              decoration: InputDecoration(
+                labelText: S.menuProductCostLabel,
+                helperText: S.menuProductCostHelper,
+                filled: false,
+              ),
+              onFieldSubmitted: handleFieldSubmit,
+              validator: Validator.positiveNumber(
+                S.menuProductCostLabel,
+                focusNode: _costFocusNode,
+              ),
+            )),
+          ],
+        ),
       ),
-      p(TextFormField(
-        key: const Key('product.name'),
-        controller: _nameController,
-        textInputAction: TextInputAction.next,
-        textCapitalization: TextCapitalization.words,
-        focusNode: _nameFocusNode,
-        decoration: InputDecoration(
-          labelText: S.menuProductNameLabel,
-          hintText: widget.product?.name ?? S.menuProductNameHint,
-          filled: false,
-        ),
-        maxLength: 30,
-        validator: Validator.textLimit(
-          S.menuProductNameLabel,
-          30,
-          focusNode: _nameFocusNode,
-          validator: (name) {
-            return widget.product?.name != name && Menu.instance.hasProductByName(name)
-                ? S.menuProductNameErrorRepeat
-                : null;
-          },
-        ),
-      )),
-      p(TextFormField(
-        key: const Key('product.price'),
-        controller: _priceController,
-        textInputAction: TextInputAction.next,
-        keyboardType: TextInputType.number,
-        focusNode: _priceFocusNode,
-        decoration: InputDecoration(
-          labelText: S.menuProductPriceLabel,
-          helperText: S.menuProductPriceHelper,
-          filled: false,
-        ),
-        validator: Validator.isNumber(
-          S.menuProductPriceLabel,
-          focusNode: _priceFocusNode,
-        ),
-      )),
-      p(TextFormField(
-        key: const Key('product.cost'),
-        controller: _costController,
-        textInputAction: TextInputAction.done,
-        keyboardType: TextInputType.number,
-        focusNode: _costFocusNode,
-        decoration: InputDecoration(
-          labelText: S.menuProductCostLabel,
-          helperText: S.menuProductCostHelper,
-          filled: false,
-        ),
-        onFieldSubmitted: handleFieldSubmit,
-        validator: Validator.positiveNumber(
-          S.menuProductCostLabel,
-          focusNode: _costFocusNode,
-        ),
-      )),
     ];
   }
 

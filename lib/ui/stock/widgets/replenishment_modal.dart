@@ -37,33 +37,40 @@ class _ReplenishmentModalState extends State<ReplenishmentModal> with ItemModal<
     final textTheme = Theme.of(context).textTheme;
 
     return <Widget>[
-      p(TextFormField(
-        key: const Key('replenishment.name'),
-        controller: _nameController,
-        textInputAction: TextInputAction.done,
-        textCapitalization: TextCapitalization.words,
-        focusNode: _nameFocusNode,
-        decoration: InputDecoration(
-          labelText: S.stockReplenishmentNameLabel,
-          hintText: widget.replenishment?.name ?? S.stockReplenishmentNameHint,
-          filled: false,
+      Material(
+        type: MaterialType.transparency,
+        child: Column(
+          children: [
+            p(TextFormField(
+              key: const Key('replenishment.name'),
+              controller: _nameController,
+              textInputAction: TextInputAction.done,
+              textCapitalization: TextCapitalization.words,
+              focusNode: _nameFocusNode,
+              decoration: InputDecoration(
+                labelText: S.stockReplenishmentNameLabel,
+                hintText: widget.replenishment?.name ?? S.stockReplenishmentNameHint,
+                filled: false,
+              ),
+              style: textTheme.titleLarge,
+              maxLength: 30,
+              validator: Validator.textLimit(
+                S.stockReplenishmentNameLabel,
+                30,
+                focusNode: _nameFocusNode,
+                validator: (name) {
+                  return widget.replenishment?.name != name && Replenisher.instance.hasName(name)
+                      ? S.stockReplenishmentNameErrorRepeat
+                      : null;
+                },
+              ),
+            )),
+            TextDivider(label: S.stockReplenishmentIngredientsDivider),
+            HintText(S.stockReplenishmentIngredientsHelper),
+            for (final ing in Stock.instance.itemList) _buildIngredientField(ing),
+          ],
         ),
-        style: textTheme.titleLarge,
-        maxLength: 30,
-        validator: Validator.textLimit(
-          S.stockReplenishmentNameLabel,
-          30,
-          focusNode: _nameFocusNode,
-          validator: (name) {
-            return widget.replenishment?.name != name && Replenisher.instance.hasName(name)
-                ? S.stockReplenishmentNameErrorRepeat
-                : null;
-          },
-        ),
-      )),
-      TextDivider(label: S.stockReplenishmentIngredientsDivider),
-      HintText(S.stockReplenishmentIngredientsHelper),
-      for (final ing in Stock.instance.itemList) _buildIngredientField(ing),
+      ),
     ];
   }
 

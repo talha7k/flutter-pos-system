@@ -31,36 +31,43 @@ class _OrderAttributeModalState extends State<OrderAttributeModal> with ItemModa
   @override
   List<Widget> buildFormFields() {
     return [
-      p(TextFormField(
-        key: const Key('order_attribute.name'),
-        controller: _nameController,
-        textInputAction: TextInputAction.send,
-        textCapitalization: TextCapitalization.words,
-        decoration: InputDecoration(
-          labelText: S.orderAttributeNameLabel,
-          hintText: widget.attribute?.name ?? S.orderAttributeNameHint,
-          filled: false,
+      Material(
+        type: MaterialType.transparency,
+        child: Column(
+          children: [
+            p(TextFormField(
+              key: const Key('order_attribute.name'),
+              controller: _nameController,
+              textInputAction: TextInputAction.send,
+              textCapitalization: TextCapitalization.words,
+              decoration: InputDecoration(
+                labelText: S.orderAttributeNameLabel,
+                hintText: widget.attribute?.name ?? S.orderAttributeNameHint,
+                filled: false,
+              ),
+              onFieldSubmitted: handleFieldSubmit,
+              maxLength: 30,
+              validator: Validator.textLimit(
+                S.orderAttributeNameLabel,
+                30,
+                focusNode: _nameFocusNode,
+                validator: (name) {
+                  return widget.attribute?.name != name && OrderAttributes.instance.hasName(name)
+                      ? S.orderAttributeNameErrorRepeat
+                      : null;
+                },
+              ),
+            )),
+            TextDivider(label: S.orderAttributeModeDivider),
+            ChoiceChipWithHelp(
+              key: modeSelector,
+              values: OrderAttributeMode.values,
+              selected: widget.isNew ? OrderAttributeMode.statOnly : widget.attribute!.mode,
+              labels: OrderAttributeMode.values.map((e) => S.orderAttributeModeName(e.name)),
+              helpTexts: OrderAttributeMode.values.map((e) => S.orderAttributeModeHelper(e.name)).toList(),
+            ),
+          ],
         ),
-        onFieldSubmitted: handleFieldSubmit,
-        maxLength: 30,
-        validator: Validator.textLimit(
-          S.orderAttributeNameLabel,
-          30,
-          focusNode: _nameFocusNode,
-          validator: (name) {
-            return widget.attribute?.name != name && OrderAttributes.instance.hasName(name)
-                ? S.orderAttributeNameErrorRepeat
-                : null;
-          },
-        ),
-      )),
-      TextDivider(label: S.orderAttributeModeDivider),
-      ChoiceChipWithHelp(
-        key: modeSelector,
-        values: OrderAttributeMode.values,
-        selected: widget.isNew ? OrderAttributeMode.statOnly : widget.attribute!.mode,
-        labels: OrderAttributeMode.values.map((e) => S.orderAttributeModeName(e.name)),
-        helpTexts: OrderAttributeMode.values.map((e) => S.orderAttributeModeHelper(e.name)).toList(),
       ),
     ];
   }

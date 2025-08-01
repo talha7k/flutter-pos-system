@@ -31,32 +31,39 @@ class _CatalogModalState extends State<CatalogModal> with ItemModal<CatalogModal
   @override
   List<Widget> buildFormFields() {
     return [
-      EditImageHolder(
-        path: _image,
-        onSelected: (image) => setState(() => _image = image),
+      Material(
+        type: MaterialType.transparency,
+        child: Column(
+          children: [
+            EditImageHolder(
+              path: _image,
+              onSelected: (image) => setState(() => _image = image),
+            ),
+            p(TextFormField(
+              key: const Key('catalog.name'),
+              controller: _nameController,
+              focusNode: _nameFocusNode,
+              textInputAction: TextInputAction.send,
+              textCapitalization: TextCapitalization.words,
+              decoration: InputDecoration(
+                labelText: S.menuCatalogNameLabel,
+                hintText: widget.catalog?.name ?? S.menuCatalogNameHint,
+                filled: false,
+              ),
+              onFieldSubmitted: handleFieldSubmit,
+              maxLength: 30,
+              validator: Validator.textLimit(
+                S.menuCatalogNameLabel,
+                30,
+                focusNode: _nameFocusNode,
+                validator: (name) {
+                  return widget.catalog?.name != name && Menu.instance.hasName(name) ? S.menuCatalogNameErrorRepeat : null;
+                },
+              ),
+            )),
+          ],
+        ),
       ),
-      p(TextFormField(
-        key: const Key('catalog.name'),
-        controller: _nameController,
-        focusNode: _nameFocusNode,
-        textInputAction: TextInputAction.send,
-        textCapitalization: TextCapitalization.words,
-        decoration: InputDecoration(
-          labelText: S.menuCatalogNameLabel,
-          hintText: widget.catalog?.name ?? S.menuCatalogNameHint,
-          filled: false,
-        ),
-        onFieldSubmitted: handleFieldSubmit,
-        maxLength: 30,
-        validator: Validator.textLimit(
-          S.menuCatalogNameLabel,
-          30,
-          focusNode: _nameFocusNode,
-          validator: (name) {
-            return widget.catalog?.name != name && Menu.instance.hasName(name) ? S.menuCatalogNameErrorRepeat : null;
-          },
-        ),
-      )),
     ];
   }
 

@@ -56,58 +56,65 @@ class _OrderAttributeModalState extends State<OrderAttributeOptionModal> with It
           );
 
     return [
-      HintText(S.orderAttributeOptionMetaOptionOf(widget.attribute.name)),
-      p(TextFormField(
-        key: const Key('order_attribute_option.name'),
-        controller: _nameController,
-        textInputAction: widget.attribute.shouldHaveModeValue ? TextInputAction.next : TextInputAction.send,
-        textCapitalization: TextCapitalization.words,
-        focusNode: _nameFocusNode,
-        decoration: InputDecoration(
-          labelText: S.orderAttributeOptionNameLabel,
-          hintText: widget.option?.name,
-          helperText: S.orderAttributeOptionNameHelper,
-          helperMaxLines: 3,
-          filled: false,
-        ),
-        maxLength: 30,
-        validator: Validator.textLimit(
-          S.orderAttributeOptionNameLabel,
-          30,
-          focusNode: _nameFocusNode,
-          validator: (name) {
-            return widget.option?.name != name && widget.attribute.hasName(name)
-                ? S.orderAttributeOptionNameErrorRepeat
-                : null;
-          },
-        ),
-      )),
-      CheckboxListTile(
-        key: const Key('order_attribute_option.isDefault'),
-        controlAffinity: ListTileControlAffinity.leading,
-        value: isDefault,
-        selected: isDefault,
-        onChanged: _toggledDefault,
-        title: Text(S.orderAttributeOptionToDefaultLabel),
-      ),
-      p(widget.attribute.shouldHaveModeValue
-          ? TextFormField(
-              key: const Key('order_attribute_option.modeValue'),
-              controller: _valueController,
-              textInputAction: TextInputAction.send,
-              keyboardType: TextInputType.number,
-              focusNode: _valueFocusNode,
+      Material(
+        type: MaterialType.transparency,
+        child: Column(
+          children: [
+            HintText(S.orderAttributeOptionMetaOptionOf(widget.attribute.name)),
+            p(TextFormField(
+              key: const Key('order_attribute_option.name'),
+              controller: _nameController,
+              textInputAction: widget.attribute.shouldHaveModeValue ? TextInputAction.next : TextInputAction.send,
+              textCapitalization: TextCapitalization.words,
+              focusNode: _nameFocusNode,
               decoration: InputDecoration(
-                labelText: label,
-                helperText: helper,
+                labelText: S.orderAttributeOptionNameLabel,
+                hintText: widget.option?.name,
+                helperText: S.orderAttributeOptionNameHelper,
                 helperMaxLines: 3,
-                hintText: hint,
                 filled: false,
               ),
-              onFieldSubmitted: handleFieldSubmit,
-              validator: validator,
-            )
-          : Center(child: HintText(helper))),
+              maxLength: 30,
+              validator: Validator.textLimit(
+                S.orderAttributeOptionNameLabel,
+                30,
+                focusNode: _nameFocusNode,
+                validator: (name) {
+                  return widget.option?.name != name && widget.attribute.hasName(name)
+                      ? S.orderAttributeOptionNameErrorRepeat
+                      : null;
+                },
+              ),
+            )),
+            CheckboxListTile(
+              key: const Key('order_attribute_option.isDefault'),
+              controlAffinity: ListTileControlAffinity.leading,
+              value: isDefault,
+              selected: isDefault,
+              onChanged: _toggledDefault,
+              title: Text(S.orderAttributeOptionToDefaultLabel),
+            ),
+            p(widget.attribute.shouldHaveModeValue
+                ? TextFormField(
+                    key: const Key('order_attribute_option.modeValue'),
+                    controller: _valueController,
+                    textInputAction: TextInputAction.send,
+                    keyboardType: TextInputType.number,
+                    focusNode: _valueFocusNode,
+                    decoration: InputDecoration(
+                      labelText: label,
+                      helperText: helper,
+                      helperMaxLines: 3,
+                      hintText: hint,
+                      filled: false,
+                    ),
+                    onFieldSubmitted: handleFieldSubmit,
+                    validator: validator,
+                  )
+                : Center(child: HintText(helper))),
+          ],
+        ),
+      ),
     ];
   }
 
