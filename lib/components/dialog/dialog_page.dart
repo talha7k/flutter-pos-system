@@ -38,36 +38,11 @@ class MaterialDialogPage<T> extends Page<T> {
   }) : assert(child != null || builder != null);
 
   @override
-  Route<T> createRoute(BuildContext context) => DialogRoute<T>(
+  Route<T> createRoute(BuildContext context) {
+    return DialogRoute<T>(
         context: context,
         settings: this,
-        builder: (context) {
-          final widget = builder?.call(context) ?? child!;
-          final size = MediaQuery.sizeOf(context);
-          
-          // Apply responsive sizing for desktop
-          if (size.width > 768) {
-            final dialogWidth = (size.width * 0.6).clamp(400.0, size.width * 0.8);
-            
-            return AlertDialog.adaptive(
-              contentPadding: EdgeInsets.zero,
-              content: ConstrainedBox(
-                constraints: BoxConstraints(
-                  minWidth: 400.0,
-                  maxWidth: dialogWidth,
-                  minHeight: 200.0,
-                ),
-                child: SizedBox(
-                  width: dialogWidth,
-                  child: widget,
-                ),
-              ),
-            );
-          }
-          
-          // For mobile, return the widget as-is
-          return widget;
-        },
+        builder: (context) => builder?.call(context) ?? child!,
         anchorPoint: anchorPoint,
         barrierColor: barrierColor,
         barrierDismissible: barrierDismissible,
@@ -76,4 +51,5 @@ class MaterialDialogPage<T> extends Page<T> {
         themes: themes,
         traversalEdgeBehavior: traversalEdgeBehavior,
       );
+  }
 }

@@ -26,59 +26,61 @@ class ResponsiveDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.sizeOf(context);
-    final dialog = size.width > Breakpoint.medium.max;
+    // Lower threshold to use dialog mode for screens > 600px instead of > 840px
+    final dialog = size.width > Breakpoint.compact.max;
+    
+
 
     if (dialog) {
-      // Calculate responsive dialog width based on screen size
-      final breakpoint = Breakpoint.find(width: size.width);
-      final dialogWidth = breakpoint.lookup<double>(
-        extraLarge: size.width * 0.4, // 40% of screen width for ultra-wide
-        large: size.width * 0.5,      // 50% of screen width for large desktop
-        expanded: size.width * 0.6,   // 60% of screen width for expanded
-        compact: Breakpoint.compact.max, // fallback
-      );
+      // Calculate responsive width: 40-60% of screen width, min 400px, max 80% screen width
+      final minWidth = 400.0;
+      final maxWidthPercent = 0.8;
+      final preferredWidthPercent = size.width > 1200 ? 0.4 : 0.6;
+      
+      final preferredWidth = size.width * preferredWidthPercent;
+      final maxWidth = size.width * maxWidthPercent;
+      final effectiveWidth = preferredWidth.clamp(minWidth, maxWidth);
+      
 
-      // Ensure minimum width for better usability
-      final effectiveWidth = dialogWidth.clamp(400.0, size.width * 0.8);
 
-      final dialog = AlertDialog.adaptive(
-        title: title,
-        contentPadding: const EdgeInsets.fromLTRB(24, 16, 24, 0),
-        scrollable: scrollable,
-        content: Stack(
-          children: [
-            ConstrainedBox(
-              constraints: BoxConstraints(
-                minWidth: 400.0, // Minimum width for better desktop experience
-                maxWidth: effectiveWidth,
-                minHeight: 200, // Minimum height for better desktop experience
-              ),
-              child: SizedBox(
-                width: effectiveWidth,
-                child: content,
-              ),
-            ),
-            const Positioned(
-              bottom: 0,
-              left: 0,
-              right: 0,
-              height: kDialogBottomSpacing,
-              child: GradientScrollHint(
-                isDialog: true,
-                direction: Axis.vertical,
-              ),
-            ),
-          ],
-        ),
-        actions: action == null
-            ? null
-            : [
-                PopButton(
-                  key: const Key('pop'),
-                  title: MaterialLocalizations.of(context).cancelButtonLabel,
+      final dialog = Center(
+        child: SizedBox(
+          width: effectiveWidth,
+          child: AlertDialog(
+            title: title,
+            contentPadding: const EdgeInsets.fromLTRB(24, 16, 24, 0),
+            scrollable: scrollable,
+            content: Stack(
+              children: [
+                ConstrainedBox(
+                  constraints: const BoxConstraints(
+                    minHeight: 200, // Minimum height for better desktop experience
+                  ),
+                  child: content,
                 ),
-                action!,
+                const Positioned(
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                  height: kDialogBottomSpacing,
+                  child: GradientScrollHint(
+                    isDialog: true,
+                    direction: Axis.vertical,
+                  ),
+                ),
               ],
+            ),
+            actions: action == null
+                ? null
+                : [
+                    PopButton(
+                      key: const Key('pop'),
+                      title: MaterialLocalizations.of(context).cancelButtonLabel,
+                    ),
+                    action!,
+                  ],
+          ),
+        ),
       );
 
       // Using _PropertyHolderWidget to allow [Scaffold]'s snackbar able to be

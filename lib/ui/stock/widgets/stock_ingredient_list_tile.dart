@@ -1,6 +1,9 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:possystem/components/bottom_sheet_actions.dart';
+import 'package:possystem/components/dialog/responsive_dialog.dart';
 import 'package:possystem/components/dialog/slider_text_dialog.dart';
 import 'package:possystem/components/style/empty_body.dart';
 import 'package:possystem/components/style/percentile_bar.dart';
@@ -83,28 +86,10 @@ class StockIngredientListTile extends StatelessWidget {
   }
 
   Future<void> editAmount(BuildContext context) async {
-    final result = await showAdaptiveDialog<String>(
+    final result = await showDialog<String>(
       context: context,
       builder: (BuildContext context) {
-        final currentValue = ValueNotifier<String?>(null);
-        return SliderTextDialog(
-          title: Text(item.name),
-          value: item.currentAmount.toDouble(),
-          max: item.maxAmount,
-          builder: (child, onSubmit) => _RestockDialog(
-            ingredient: item,
-            quantityTab: child,
-            onSubmit: onSubmit,
-            currentValue: currentValue,
-          ),
-          currentValue: currentValue,
-          decoration: InputDecoration(
-            label: Text(S.stockIngredientRestockDialogQuantityLabel),
-            helperText: S.stockIngredientRestockDialogQuantityHelper,
-            helperMaxLines: 3,
-          ),
-          validator: Validator.positiveNumber(S.stockIngredientRestockDialogQuantityLabel),
-        );
+        return _RestockResponsiveDialog(ingredient: item);
       },
     );
 
@@ -285,6 +270,122 @@ class _RestockDialogState extends State<_RestockDialog> {
       replenishBy = other;
     });
     await Cache.instance.set('stock.replenishBy', other.index);
+  }
+}
+
+class _RestockResponsiveDialog extends StatefulWidget {
+  final Ingredient ingredient;
+
+  const _RestockResponsiveDialog({required this.ingredient});
+
+  @override
+  State<_RestockResponsiveDialog> createState() => _RestockResponsiveDialogState();
+}
+
+class _RestockResponsiveDialogState extends State<_RestockResponsiveDialog> {
+  late final TextEditingController textController;
+  late ValueNotifier<double> sliderValue;
+  late final double sliderMax;
+  late final bool withSlider;
+  final form = GlobalKey<FormState>();
+  final currentValue = ValueNotifier<String?>(null);
+
+  @override
+  Widget build(BuildContext context) {
+    final local = MaterialLocalizations.of(context);
+
+    Widget child = buildTextWithSlider();
+    child = _RestockDialog(
+      ingredient: widget.ingredient,
+      quantityTab: child,
+      onSubmit: onSubmit,
+      currentValue: currentValue,
+    );
+
+    return ResponsiveDialog(
+      title: Text(widget.ingredient.name),
+      content: Form(key: form, child: child),
+      action: FilledButton(
+        key: const Key('slider_dialog.confirm'),
+        onPressed: () {
+          if (currentValue.value != null) {
+            onSubmit(currentValue.value);
+          } else {
+            onSubmit(textController.text);
+          }
+        },
+        child: Text(local.okButtonLabel),
+      ),
+    );
+  }
+
+  Widget buildTextWithSlider() {
+    return ListenableBuilder(
+      listenable: sliderValue,
+      builder: (_, __) => Column(children: [
+        Material(
+          type: MaterialType.transparency,
+          child: TextFormField(
+            key: const Key('slider_dialog.text'),
+            controller: textController,
+            onSaved: onSubmit,
+            onFieldSubmitted: onSubmit,
+            autofocus: !withSlider,
+            keyboardType: TextInputType.number,
+            validator: Validator.positiveNumber(S.stockIngredientRestockDialogQuantityLabel),
+            decoration: InputDecoration(
+              label: Text(S.stockIngredientRestockDialogQuantityLabel),
+              helperText: S.stockIngredientRestockDialogQuantityHelper,
+              helperMaxLines: 3,
+            ),
+            textInputAction: TextInputAction.done,
+          ),
+        ),
+        if (withSlider)
+          Slider.adaptive(
+            value: sliderValue.value,
+            max: sliderMax,
+            min: 0.0,
+            label: sliderValue.value.round().toString(),
+            onChanged: (double value) {
+              textController.text = value.round().toString();
+              currentValue.value = textController.text;
+              sliderValue.value = value;
+            },
+          ),
+      ]),
+    );
+  }
+
+  void onSubmit(String? value) {
+    if (form.currentState!.validate()) {
+      Navigator.of(context).pop(value);
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    textController = TextEditingController(text: widget.ingredient.currentAmount.toShortString());
+    sliderValue = ValueNotifier(widget.ingredient.currentAmount.toDouble());
+    sliderMax = max(widget.ingredient.maxAmount, sliderValue.value);
+    withSlider = widget.ingredient.maxAmount > 0;
+    if (!withSlider) {
+      textController.selection = TextSelection(
+        baseOffset: 0,
+        extentOffset: textController.text.length,
+      );
+    }
+
+    textController.addListener(() {
+      currentValue.value = textController.text;
+    });
+  }
+
+  @override
+  void dispose() {
+    textController.dispose();
+    super.dispose();
   }
 }
 

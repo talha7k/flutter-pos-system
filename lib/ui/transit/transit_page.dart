@@ -12,7 +12,8 @@ class TransitPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(children: [
+    return Material(
+      child: ListView(children: [
       ListTile(
         key: const Key('transit.google_sheet'),
         leading: CircleAvatar(
@@ -54,7 +55,8 @@ class TransitPage extends StatelessWidget {
         onTap: () => _next(context, TransitMethod.plainText),
       ),
       const SizedBox(height: kFABSpacing),
-    ]);
+    ]),
+    );
   }
 
   void _next(BuildContext context, TransitMethod method) async {
@@ -64,14 +66,16 @@ class TransitPage extends StatelessWidget {
         return AlertDialog.adaptive(
           title: Text(S.transitCatalogTitle(method.l10nName)),
           scrollable: true,
-          content: Column(children: [
-            for (final catalog in TransitCatalog.values)
-              ListTile(
-                title: Text(catalog.l10nName),
-                subtitle: Text(catalog.l10nHelper),
-                onTap: () => Navigator.of(context).pop(catalog),
-              ),
-          ]),
+          content: Material(
+            child: Column(children: [
+              for (final catalog in TransitCatalog.values)
+                ListTile(
+                  title: Text(catalog.l10nName),
+                  subtitle: Text(catalog.l10nHelper),
+                  onTap: () => Navigator.of(context).pop(catalog),
+                ),
+            ]),
+          ),
         );
       },
     );
