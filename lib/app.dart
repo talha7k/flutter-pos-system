@@ -71,7 +71,7 @@ class App extends StatelessWidget {
 
             return localizations.appTitle;
           },
-          debugShowCheckedModeBanner: !isProd,
+          debugShowCheckedModeBanner: false,
 
           // Provide the generated AppLocalizations to the MaterialApp. This
           // allows descendant Widgets to display the correct translations

@@ -29,6 +29,18 @@ class ResponsiveDialog extends StatelessWidget {
     final dialog = size.width > Breakpoint.medium.max;
 
     if (dialog) {
+      // Calculate responsive dialog width based on screen size
+      final breakpoint = Breakpoint.find(width: size.width);
+      final dialogWidth = breakpoint.lookup<double>(
+        extraLarge: size.width * 0.4, // 40% of screen width for ultra-wide
+        large: size.width * 0.5,      // 50% of screen width for large desktop
+        expanded: size.width * 0.6,   // 60% of screen width for expanded
+        compact: Breakpoint.compact.max, // fallback
+      );
+
+      // Ensure minimum width for better usability
+      final effectiveWidth = dialogWidth.clamp(400.0, size.width * 0.8);
+
       final dialog = AlertDialog.adaptive(
         title: title,
         contentPadding: const EdgeInsets.fromLTRB(24, 16, 24, 0),
@@ -36,8 +48,15 @@ class ResponsiveDialog extends StatelessWidget {
         content: Stack(
           children: [
             ConstrainedBox(
-              constraints: BoxConstraints(minWidth: Breakpoint.compact.max),
-              child: content,
+              constraints: BoxConstraints(
+                minWidth: 400.0, // Minimum width for better desktop experience
+                maxWidth: effectiveWidth,
+                minHeight: 200, // Minimum height for better desktop experience
+              ),
+              child: SizedBox(
+                width: effectiveWidth,
+                child: content,
+              ),
             ),
             const Positioned(
               bottom: 0,

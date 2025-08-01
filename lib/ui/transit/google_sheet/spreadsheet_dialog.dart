@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:possystem/components/dialog/responsive_dialog.dart';
 import 'package:possystem/components/style/pop_button.dart';
 import 'package:possystem/components/style/snackbar.dart';
 import 'package:possystem/helpers/logger.dart';
@@ -109,7 +110,7 @@ class SpreadsheetDialog extends StatefulWidget {
     required bool allowCreateNew,
     String? fallbackCacheKey,
   }) {
-    return showAdaptiveDialog<GoogleSpreadsheet>(
+    return showDialog<GoogleSpreadsheet>(
       context: context,
       barrierColor: Colors.transparent,
       builder: (_) => SpreadsheetDialog._(
@@ -144,51 +145,43 @@ class _SpreadsheetDialogState extends State<SpreadsheetDialog> {
 
   @override
   Widget build(BuildContext context) {
-    return AlertDialog.adaptive(
+    return ResponsiveDialog(
       title: Text(S.transitGoogleSheetDialogTitle),
-      content: SingleChildScrollView(
-        child: Column(children: [
-          if (widget.allowCreateNew) ...[
-            CheckboxListTile.adaptive(
-              dense: true,
-              value: createNew,
-              title: Text(S.transitGoogleSheetDialogCreate),
-              onChanged: (v) => setState(() => createNew = v!),
-            ),
-            CheckboxListTile.adaptive(
-              dense: true,
-              value: !createNew,
-              title: Text(S.transitGoogleSheetDialogSelectExist),
-              onChanged: (v) => setState(() => createNew = !v!),
-            ),
-            const Divider(),
-          ],
-          if (!createNew) ...[
-            _buildTextField(),
-            if (errorText != null)
-              Padding(
-                padding: const EdgeInsets.only(top: 8.0),
-                child: Text(errorText!, style: Theme.of(context).inputDecorationTheme.errorStyle),
-              ),
-          ],
-          if (showTutorial)
+      content: Column(children: [
+        if (widget.allowCreateNew) ...[
+          CheckboxListTile.adaptive(
+            dense: true,
+            value: createNew,
+            title: Text(S.transitGoogleSheetDialogCreate),
+            onChanged: (v) => setState(() => createNew = v!),
+          ),
+          CheckboxListTile.adaptive(
+            dense: true,
+            value: !createNew,
+            title: Text(S.transitGoogleSheetDialogSelectExist),
+            onChanged: (v) => setState(() => createNew = !v!),
+          ),
+          const Divider(),
+        ],
+        if (!createNew) ...[
+          _buildTextField(),
+          if (errorText != null)
             Padding(
               padding: const EdgeInsets.only(top: 8.0),
-              child: _buildTutorialImage(),
+              child: Text(errorText!, style: Theme.of(context).inputDecorationTheme.errorStyle),
             ),
-        ]),
+        ],
+        if (showTutorial)
+          Padding(
+            padding: const EdgeInsets.only(top: 8.0),
+            child: _buildTutorialImage(),
+          ),
+      ]),
+      action: TextButton(
+        key: const Key('transit.spreadsheet_confirm'),
+        onPressed: _confirm,
+        child: Text(S.transitGoogleSheetDialogConfirm),
       ),
-      actions: [
-        PopButton(
-          key: const Key('transit.spreadsheet_cancel'),
-          title: MaterialLocalizations.of(context).cancelButtonLabel,
-        ),
-        TextButton(
-          key: const Key('transit.spreadsheet_confirm'),
-          onPressed: _confirm,
-          child: Text(S.transitGoogleSheetDialogConfirm),
-        ),
-      ],
     );
   }
 

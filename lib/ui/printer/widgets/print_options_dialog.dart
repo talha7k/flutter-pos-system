@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
+import 'package:possystem/components/dialog/responsive_dialog.dart';
 import 'package:possystem/components/style/pop_button.dart';
 import 'package:possystem/components/style/snackbar.dart';
 import 'package:possystem/helpers/logger.dart';
@@ -17,7 +18,7 @@ class PrintOptionsDialog extends StatelessWidget {
   });
 
   static Future<void> show(BuildContext context, OrderObject order) async {
-    await showAdaptiveDialog(
+    await showDialog(
       context: context,
       builder: (context) => PrintOptionsDialog(order: order),
     );
@@ -27,7 +28,7 @@ class PrintOptionsDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     final hasConnectedPrinters = Printers.instance.hasConnected;
     
-    return AlertDialog.adaptive(
+    return ResponsiveDialog(
       title: Text(S.printerOptionsTitle),
       content: Column(
         mainAxisSize: MainAxisSize.min,
@@ -78,9 +79,6 @@ class PrintOptionsDialog extends StatelessWidget {
           ),
         ],
       ),
-      actions: [
-        PopButton(title: MaterialLocalizations.of(context).cancelButtonLabel),
-      ],
     );
   }
 
@@ -160,9 +158,9 @@ class PrintOptionsDialog extends StatelessWidget {
   }
 
   Future<void> _showPdfOptions(BuildContext context, List<int> pdfBytes) async {
-    await showAdaptiveDialog(
+    await showDialog(
       context: context,
-      builder: (context) => AlertDialog.adaptive(
+      builder: (context) => ResponsiveDialog(
         title: Text(S.printerPdfTitle),
         content: Column(
           mainAxisSize: MainAxisSize.min,
@@ -226,9 +224,6 @@ class PrintOptionsDialog extends StatelessWidget {
             ),
           ],
         ),
-        actions: [
-          PopButton(title: MaterialLocalizations.of(context).cancelButtonLabel),
-        ],
       ),
     );
   }

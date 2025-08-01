@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:possystem/components/dialog/responsive_dialog.dart';
 import 'package:possystem/components/style/pop_button.dart';
 
 class ConfirmDialog extends StatelessWidget {
@@ -17,7 +18,7 @@ class ConfirmDialog extends StatelessWidget {
     String? content,
     Widget? body,
   }) async {
-    final result = await showAdaptiveDialog<bool?>(
+    final result = await showDialog<bool?>(
       context: context,
       builder: (_) => ConfirmDialog(
         title: title,
@@ -31,20 +32,14 @@ class ConfirmDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final local = MaterialLocalizations.of(context);
-    return AlertDialog.adaptive(
+    return ResponsiveDialog(
       title: Text(title),
-      content: content == null ? null : SingleChildScrollView(child: content),
-      actions: <Widget>[
-        PopButton(
-          key: const Key('confirm_dialog.cancel'),
-          title: local.cancelButtonLabel,
-        ),
-        FilledButton(
-          key: const Key('confirm_dialog.confirm'),
-          onPressed: () => Navigator.of(context).pop(true),
-          child: Text(local.okButtonLabel),
-        ),
-      ],
+      content: content ?? const SizedBox.shrink(),
+      action: FilledButton(
+        key: const Key('confirm_dialog.confirm'),
+        onPressed: () => Navigator.of(context).pop(true),
+        child: Text(local.okButtonLabel),
+      ),
     );
   }
 }
