@@ -46,19 +46,30 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 
-# Sensitive data
-google-services.json
+# Firebase & Sensitive Configuration Files
+# These files contain API keys and should never be committed
+**/firebase_options.dart
+**/firebase_options.*.dart
+**/GoogleService-Info.plist
+**/google-services.json
 services.*.tar
-firebase_options.dart
-GoogleService-Info.plist
-firebase_options.prod.dart
-firebase_options.dev.dart
+
+# Environment-specific configurations
+.env
+.env.local
+.env.*.local
+*.key
+*.pem
+*.p12
+*.keystore
+
+# Development & Testing
+coverage/
+site/
+Pipfile.lock
+
+# Platform-specific build artifacts
+android/build/*
 
 # mocks
 # *.mocks.dart
-
-coverage/
-android/build/*
-site/
-Pipfile.lock
-/*.key
