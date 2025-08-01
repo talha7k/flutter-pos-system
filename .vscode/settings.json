@@ -33,6 +33,17 @@
     "*.arb": "json"
   },
   "yaml.schemas": {
-    ".vscode/arb.schema.json": ["/assets/l10n/**/*.yaml"]
+    ".vscode/arb.schema.json": [
+      "/assets/l10n/**/*.yaml"
+    ]
+  },
+  "task.allowAutomaticTasks": true,
+  "debug.openDebug": "neverOpen",
+  "terminal.integrated.inheritEnv": false,
+  "tasks": {
+    "label": "lint on open",
+    "type": "shell",
+    "command": "npm run lint",
+    "runOn": "folderOpen"
   }
 }
